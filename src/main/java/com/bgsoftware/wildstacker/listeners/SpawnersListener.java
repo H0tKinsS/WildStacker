@@ -595,9 +595,13 @@ public final class SpawnersListener implements Listener {
         }
 
         ItemStack inHand = e.getItem().clone();
-
+        Random random = new Random();
+        
         Executor.sync(() -> {
-            stackedSpawner.updateName();
+            boolean changeSpawner = random.nextInt(100) < 10;  // 10% chance
+            if (changeSpawner) {
+                stackedSpawner.updateName();
+            }
             if (e.getPlayer().getGameMode() != GameMode.CREATIVE && plugin.getSettings().eggsStackMultiply)
                 ItemUtils.removeItemFromHand(e.getPlayer().getInventory(), inHand, stackedSpawner.getStackAmount() - 1);
         }, 2L);
